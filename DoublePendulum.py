@@ -50,17 +50,17 @@ class Pendulum:
         A = np.cos(theta1 - theta2)
         B = np.sin(theta1 - theta2)
         C = (1 + B**2)
-        expr4 = p1 * p2 * B / C
-        expr5 = (p1**2 + 2 * p2**2 - p1 * p2 * A) \
+        D = p1 * p2 * B / C
+        E = (p1**2 + 2 * p2**2 - p1 * p2 * A) \
         * np.sin(2 * (theta1 - theta2)) / 2 / C**2
-        expr6 = expr4 - expr5
+        F = D - E
 
         #Hamilton's equations
         self.theta1 += self.dt * (p1 - p2 * A) / C #our theta_dot_1 equation
         self.theta2 += self.dt * (2 * p2 - p1 * A) / C #our theta_dot_2 equation
 
-        self.p1 += self.dt * (-2 * g * l * np.sin(theta1) - expr6)  #our p_dot_1 equation
-        self.p2 += self.dt * (    -g * l * np.sin(theta2) + expr6)       #our p_dot_2 equation
+        self.p1 += self.dt * (-2 * g * l * np.sin(theta1) - F)  #our p_dot_1 equation
+        self.p2 += self.dt * (-g * l * np.sin(theta2) + F)       #our p_dot_2 equation
 
         #The computer can now use these 4 coupled first order ODEs to ascetain theta1 and theta2 for this time step
         position = self.coord_conversion()  #convert the theta1 and theta2 coordinates to cartesian                 
